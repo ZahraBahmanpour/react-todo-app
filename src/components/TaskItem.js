@@ -4,7 +4,7 @@ export default class TaskItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      task: this.props.taskItem.task,
+      task: this.props.taskItem,
       isEditing: false,
     };
   }
@@ -18,7 +18,7 @@ export default class TaskItem extends Component {
     this.props.deleteTask(this.props.id);
   };
   handleChange = (event) => {
-    this.setState({ task: event.target.value });
+    this.setState({ task: {title: event.target.value}});
   };
   handleSubmit = (event) => {
     event.preventDefault();
@@ -33,7 +33,7 @@ export default class TaskItem extends Component {
             <td>
               <form onSubmit={this.handleSubmit}>
                 <input
-                  value={this.state.task}
+                  value={this.state.task.title}
                   onChange={this.handleChange}
                   autoFocus
                 />
@@ -71,7 +71,7 @@ export default class TaskItem extends Component {
                     : 'not-completed'
                 }
               >
-                {this.props.taskItem.task}
+                {this.props.taskItem.title}
               </span>
             </td>
             <td>

@@ -78,3 +78,8 @@ button.back {
 .completed {
   text-decoration: line-through;
 }
+
+.delete-all-container {
+  display: flex;
+  justify-content: flex-end;
+}

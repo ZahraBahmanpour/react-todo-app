@@ -4,16 +4,16 @@ export default class CreateTask extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      task: '',
+      task: {},
     };
   }
   handleChange = (event) => {
-    this.setState({ task: event.target.value });
+    this.setState({ task: {title: event.target.value, isCompleted: false}});
   };
   handleSubmit = (event) => {
     event.preventDefault();
     this.props.createTask(this.state.task);
-    this.setState({ task: '' });
+    this.setState({ task: {title: '', isCompleted: false}});
   };
   render() {
     return (
@@ -21,7 +21,7 @@ export default class CreateTask extends Component {
         <input
           type="text"
           placeholder="Enter task"
-          value={this.state.task}
+          value={this.state.task.title}
           onChange={this.handleChange}
           autoFocus
         />

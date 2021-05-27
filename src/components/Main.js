@@ -1,44 +1,54 @@
 import React from 'react';
 import CreateTask from './CreateTask';
 import TaskList from './TaskList';
+import SearchTask from './SearchTask';
 
-const tasks = localStorage.getItem('tasks')
-  ? JSON.parse(localStorage.getItem('tasks'))
-  : [];
 export default class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tasks: tasks,
+      tasks: [],
+      searchQuery: '',
     };
   }
   createTask = (task) => {
-    if (task.trim() === '') {
+    if (task.title.trim() === '') {
       alert("Task can't be empty");
       return;
     }
-    tasks.push({ task, isCompleted: false });
-    this.setState({ tasks: tasks });
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    const {tasks} = this.state;
+    const newTasks = [...tasks, task];
+    console.warn(`task:: ${task}`);
+    this.setState({ tasks: newTasks });
   };
   toggleTask = (taskId) => {
-    const taskItem = tasks[taskId];
+    const {tasks} = this.state;
+    const newTasks = [...tasks];
+    const taskItem = newTasks[taskId];
     taskItem.isCompleted = !taskItem.isCompleted;
-    this.setState({ tasks: tasks });
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    this.setState({ tasks: newTasks });
   };
   deleteTask = (taskId) => {
-    tasks.splice(taskId, 1);
-    this.setState({ tasks: tasks });
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    const {tasks} = this.state;
+    const newTasks = [...tasks];
+    newTasks.splice(taskId, 1);
+    this.setState({ tasks: newTasks });
+  };
+  deleteAllTasks = () => {
+    this.setState({ tasks: [] });
   };
   editTask = (taskId, task) => {
-    const taskItem = tasks[taskId];
-    taskItem.task = task;
-    this.setState({ tasks: tasks });
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    const {tasks} = this.state;
+    const newTasks = [...tasks];
+    newTasks[taskId] = task;
+    this.setState({ tasks: newTasks });
+  };
+  searchTask = (searchQuery) => {
+    console.warn(`QUERY:: ${searchQuery}`);
+    this.setState({searchQuery});
   };
   render() {
+    const {tasks, searchQuery} = this.state;
     return (
       <div className="main">
         <h1>Todos</h1>
@@ -46,11 +56,22 @@ export default class Main extends React.Component {
           <CreateTask createTask={this.createTask} />
           <br />
           <TaskList
-            tasks={this.state.tasks}
+            tasks={tasks.filter(task => task.title.toLowerCase().includes(searchQuery))}
             deleteTask={this.deleteTask}
             editTask={this.editTask}
             toggleTask={this.toggleTask}
           />
+          <br/>
+          {
+            tasks.length > 0 &&
+          <div class="delete-all-container">
+          <button className="delete" onClick={this.deleteAllTasks}>
+            Delete All
+          </button>
+          </div>
+          }
+          <br/>
+          <SearchTask searchTask={this.searchTask} />
         </div>
       </div>
     );
