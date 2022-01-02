@@ -44,7 +44,6 @@ export default class Main extends React.Component {
     this.setState({ tasks: newTasks });
   };
   searchTask = (searchQuery) => {
-    console.warn(`QUERY:: ${searchQuery}`);
     this.setState({searchQuery});
   };
   render() {

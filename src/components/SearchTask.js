@@ -14,6 +14,7 @@ export default class SearchTask extends Component {
   };
   render() {
     return (
+      <React.Fragment>
         <input
           type="text"
           placeholder="Search task"
@@ -21,6 +22,15 @@ export default class SearchTask extends Component {
           onChange={this.handleChange}
           autoFocus
         />
+          <button className="empty-search-box" onClick={this.emptySearchString}>
+            Empty Search Box
+          </button>
+        </React.Fragment>
     );
+  }
+  emptySearchString = () => {
+    const {searchTask} = this.props;
+    this.setState({ task: '' });
+    searchTask('');
   }
 }
