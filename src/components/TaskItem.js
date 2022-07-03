@@ -18,7 +18,7 @@ export default class TaskItem extends Component {
     this.props.deleteTask(this.props.id);
   };
   handleChange = (event) => {
-    this.setState({ task: {title: event.target.value}});
+    this.setState({ task: { title: event.target.value } });
   };
   handleSubmit = (event) => {
     event.preventDefault();
@@ -26,14 +26,15 @@ export default class TaskItem extends Component {
     this.setState({ isEditing: false });
   };
   render() {
+    const { isEditing, task } = this.state;
     return (
       <tr>
-        {this.state.isEditing ? (
+        {isEditing ? (
           <>
             <td>
               <form onSubmit={this.handleSubmit}>
                 <input
-                  value={this.state.task.title}
+                  value={task.title}
                   onChange={this.handleChange}
                   autoFocus
                 />

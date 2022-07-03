@@ -3,6 +3,7 @@ import TaskItem from './TaskItem';
 
 export default class TaskList extends Component {
   render() {
+    const { tasks, deleteTask, editTask, toggleTask } = this.props;
     return (
       <table>
         <thead>
@@ -12,14 +13,14 @@ export default class TaskList extends Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.tasks.map((task, index) => (
+          {tasks.map((task, index) => (
             <TaskItem
               key={index}
               taskItem={task}
               id={index}
-              deleteTask={this.props.deleteTask}
-              editTask={this.props.editTask}
-              toggleTask={this.props.toggleTask}
+              deleteTask={deleteTask}
+              editTask={editTask}
+              toggleTask={toggleTask}
             />
           ))}
         </tbody>
