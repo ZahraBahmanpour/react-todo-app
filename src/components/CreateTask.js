@@ -16,12 +16,15 @@ export default class CreateTask extends Component {
     this.setState({ task: { title: '', isCompleted: false } });
   };
   render() {
+    const {
+      task: { title },
+    } = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
         <input
           type="text"
           placeholder="Enter task"
-          value={this.state.task.title}
+          value={title ? title : ''}
           onChange={this.handleChange}
           autoFocus
         />
